@@ -1,0 +1,11 @@
+Uuid: db57ecbe2cb7446292a94aa6181c9278
+ExtensionType: 1
+Name: Content Type Converter
+ScreenVersion: 1.4
+SerialVersion: 3
+MinPlatformVersion: 0
+ProOnly: False
+Author: Eric Gruber
+ShortDescription: Converts JSON To XML, XML to JSON, body parameters to JSON, and body parameters to XML.
+EntryPoint: build/libs/content-type-converter-all.jar
+BuildCommand: gradle -PburpJar=$BURP_JAR fatJar
