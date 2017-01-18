@@ -8,4 +8,4 @@ ProOnly: False
 Author: Eric Gruber
 ShortDescription: Converts JSON To XML, XML to JSON, body parameters to JSON, and body parameters to XML.
 EntryPoint: build/libs/content-type-converter-all.jar
-BuildCommand: gradle -PburpJar=$BURP_JAR fatJar
+BuildCommand: gradle fatJar
