@@ -1,6 +1,7 @@
 Uuid: db57ecbe2cb7446292a94aa6181c9278
 ExtensionType: 1
 Name: Content Type Converter
+RepoName: content-type-converter
 ScreenVersion: 1.5
 SerialVersion: 4
 MinPlatformVersion: 0
