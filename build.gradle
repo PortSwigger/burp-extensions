@@ -10,14 +10,6 @@ dependencies {
     compile 'org.json:json:20160810'
 }
 
-sourceSets {
-    main {
-        java {
-            srcDir 'ContentTypeConverter/src'
-        }
-    }
-}
-
 task fatJar(type: Jar) {
     baseName = project.name + '-all'
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
