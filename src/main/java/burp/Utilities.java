@@ -1,7 +1,6 @@
 package burp;
 
 import com.google.gson.Gson;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.json.XML;
@@ -16,10 +15,14 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.net.URLDecoder;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Utilities {
 
@@ -37,7 +40,7 @@ public class Utilities {
 
         byte content_type = requestInfo.getContentType();
 
-        String body = new String(request, bodyOffset, request.length - bodyOffset, "UTF-8");
+        String body = new String(request, bodyOffset, request.length - bodyOffset, UTF_8);
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         Document doc = new Document() {
@@ -233,7 +236,7 @@ public class Utilities {
                 return null;
             }
 
-            public NodeList getElementsByTagName(String tagname) {
+            public NodeList getElementsByTagName(String tagName) {
                 return null;
             }
 
@@ -325,11 +328,10 @@ public class Utilities {
             body = gson.toJson(params);
         }
 
-        Boolean success = true;
+        boolean success = true;
 
         try {
-            Object item = new JSONTokener(body).nextValue();
-            Object json = item;
+            Object json = new JSONTokener(body).nextValue();
 
             xml.append(XML.toString(json));
             xml.append("</root>");
@@ -337,34 +339,22 @@ public class Utilities {
             DocumentBuilder builder = factory.newDocumentBuilder();
 
             ByteArrayInputStream input =  new ByteArrayInputStream(
-                    xml.toString().getBytes("UTF-8"));
+                    xml.toString().getBytes(UTF_8));
             doc = builder.parse(input);
 
-        }catch (Exception e){
+        } catch (Exception e){
             success = false;
-
         }
 
         if (!success) {
             return null;
-        } else {
-
-            List<String> headers;
-
-            headers = helpers.analyzeRequest(request).getHeaders();
-
-            Iterator<String> iter = headers.iterator();
-            while(iter.hasNext()){
-                if(iter.next().contains("Content-Type"))
-                    iter.remove();
-            }
-
-            headers.add("Content-Type: application/xml;charset=UTF-8");
-
-            return helpers.buildHttpMessage(headers,prettyPrint(doc).getBytes());
-
         }
 
+        List<String> headers = helpers.analyzeRequest(request).getHeaders();
+        headers.removeIf(s -> s.contains("Content-Type"));
+        headers.add("Content-Type: application/xml;charset=UTF-8");
+
+        return helpers.buildHttpMessage(headers, prettyPrint(doc).getBytes());
     }
 
     public static byte[] convertToJSON(IExtensionHelpers helpers, IHttpRequestResponse requestResponse) {
@@ -385,7 +375,7 @@ public class Utilities {
 
         String json = "";
 
-        Boolean success = true;
+        boolean success = true;
 
         try {
             if (content_type == 3) {
@@ -405,38 +395,27 @@ public class Utilities {
 
         if (!success) {
             return request;
-        } else {
-
-            List<String> headers;
-
-            headers = helpers.analyzeRequest(request).getHeaders();
-
-            Iterator<String> iter = headers.iterator();
-            while(iter.hasNext()){
-                if(iter.next().contains("Content-Type"))
-                    iter.remove();
-            }
-
-            headers.add("Content-Type: application/json;charset=UTF-8");
-
-            return helpers.buildHttpMessage(headers, json.getBytes());
-
         }
 
+        List<String> headers = helpers.analyzeRequest(request).getHeaders();
+        headers.removeIf(s -> s.contains("Content-Type"));
+        headers.add("Content-Type: application/json;charset=UTF-8");
 
+        return helpers.buildHttpMessage(headers, json.getBytes());
     }
 
-    private static Map<String,String> splitQuery(String body) throws UnsupportedEncodingException {
+    private static Map<String,String> splitQuery(String body)
+    {
         Map<String, String> query_pairs = new LinkedHashMap<>();
-        List<String> pairs = Arrays.asList(body.split("&"));
+        String[] pairs = body.split("&");
 
         for (String pair : pairs) {
             final int idx = pair.indexOf("=");
-            final String key = idx > 0 ? URLDecoder.decode(pair.substring(0, idx), "UTF-8") : pair;
+            final String key = idx > 0 ? URLDecoder.decode(pair.substring(0, idx), UTF_8) : pair;
             if (!query_pairs.containsKey(key)) {
                 query_pairs.put(key, "");
             }
-            final String value = idx > 0 && pair.length() > idx + 1 ? URLDecoder.decode(pair.substring(idx + 1), "UTF-8") : "";
+            final String value = idx > 0 && pair.length() > idx + 1 ? URLDecoder.decode(pair.substring(idx + 1), UTF_8) : "";
             query_pairs.put(key,value.trim());
         }
         return query_pairs;
