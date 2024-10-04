@@ -1,8 +1,6 @@
 package burp;
 
 import javax.swing.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -32,85 +30,48 @@ public class Menu implements IContextMenuFactory
         }
 
         JMenuItem sendXMLToRepeater = new JMenuItem("Convert to XML");
-        JMenuItem sendJSONToRepeater = new JMenuItem("Convert to JSON");
-        sendXMLToRepeater.addMouseListener(new MouseListener()
-        {
-            public void mouseClicked(MouseEvent arg0)
-            {
-            }
+        sendXMLToRepeater.addActionListener(l -> {
+            IHttpRequestResponse iReqResp = invocation.getSelectedMessages()[0];
 
-            public void mouseEntered(MouseEvent arg0)
+            try
             {
-            }
-
-            public void mouseExited(MouseEvent arg0)
-            {
-            }
-
-            public void mousePressed(MouseEvent arg0)
-            {
-            }
-
-            public void mouseReleased(MouseEvent arg0)
-            {
-                IHttpRequestResponse iReqResp = invocation.getSelectedMessages()[0];
-                try
+                byte[] request = Utilities.convertToXML(helpers, iReqResp);
+                if (request != null)
                 {
-                    byte[] request = Utilities.convertToXML(helpers, iReqResp);
-                    if (request != null)
-                    {
-                        iReqResp.setRequest(request);
-                    }
+                    iReqResp.setRequest(request);
                 }
-                catch (Exception e)
-                {
-                    StringWriter out = new StringWriter();
-                    e.printStackTrace(new PrintWriter(out));
-                    callbacks.printError(out.toString());
-                }
+            }
+            catch (Exception e)
+            {
+                StringWriter out = new StringWriter();
+                e.printStackTrace(new PrintWriter(out));
+                callbacks.printError(out.toString());
             }
         });
 
-        sendJSONToRepeater.addMouseListener(new MouseListener()
-        {
-            public void mouseClicked(MouseEvent arg0)
-            {
-            }
+        JMenuItem sendJSONToRepeater = new JMenuItem("Convert to JSON");
+        sendJSONToRepeater.addActionListener(l -> {
+            IHttpRequestResponse iReqResp = invocation.getSelectedMessages()[0];
 
-            public void mouseEntered(MouseEvent arg0)
+            try
             {
-            }
-
-            public void mouseExited(MouseEvent arg0)
-            {
-            }
-
-            public void mousePressed(MouseEvent arg0)
-            {
-            }
-
-            public void mouseReleased(MouseEvent arg0)
-            {
-                IHttpRequestResponse iReqResp = invocation.getSelectedMessages()[0];
-                try
+                byte[] request = Utilities.convertToJSON(helpers, iReqResp);
+                if (request != null)
                 {
-                    byte[] request = Utilities.convertToJSON(helpers, iReqResp);
-                    if (request != null)
-                    {
 
-                        iReqResp.setRequest(request);
-                    }
-                } catch (Exception e)
-                {
-                    StringWriter out = new StringWriter();
-                    e.printStackTrace(new PrintWriter(out));
-                    callbacks.printError(out.toString());
+                    iReqResp.setRequest(request);
                 }
+            } catch (Exception e)
+            {
+                StringWriter out = new StringWriter();
+                e.printStackTrace(new PrintWriter(out));
+                callbacks.printError(out.toString());
             }
         });
 
         menus.add(sendXMLToRepeater);
         menus.add(sendJSONToRepeater);
+
         return menus;
     }
 }
