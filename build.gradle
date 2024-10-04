@@ -5,13 +5,12 @@ repositories {
 }
 
 dependencies {
-    compile 'net.portswigger.burp.extender:burp-extender-api:1.7.13'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'org.json:json:20160810'
+    compileOnly 'net.portswigger.burp.extender:burp-extender-api:1.7.13'
+    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation 'org.json:json:20231013'
 }
 
-task fatJar(type: Jar) {
-    baseName = project.name + '-all'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-    with jar
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
 }
