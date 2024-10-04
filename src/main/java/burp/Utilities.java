@@ -20,7 +20,6 @@ import java.net.URLDecoder;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -29,12 +28,7 @@ public class Utilities
 
     public static byte[] convertToXML(IExtensionHelpers helpers, IHttpRequestResponse requestResponse) throws Exception
     {
-        byte[] request = requestResponse.getRequest();
-
-        if (Objects.equals(helpers.analyzeRequest(request).getMethod(), "GET"))
-        {
-            request = helpers.toggleRequestMethod(request);
-        }
+        byte[] request = getAppropriateRequest(helpers, requestResponse.getRequest());
 
         IRequestInfo requestInfo = helpers.analyzeRequest(request);
 
@@ -85,12 +79,7 @@ public class Utilities
     public static byte[] convertToJSON(IExtensionHelpers helpers, IHttpRequestResponse requestResponse)
     {
 
-        byte[] request = requestResponse.getRequest();
-
-        if (Objects.equals(helpers.analyzeRequest(request).getMethod(), "GET"))
-        {
-            request = helpers.toggleRequestMethod(request);
-        }
+        byte[] request = getAppropriateRequest(helpers, requestResponse.getRequest());
 
         IRequestInfo requestInfo = helpers.analyzeRequest(request);
 
@@ -130,6 +119,16 @@ public class Utilities
         headers.add("Content-Type: application/json;charset=UTF-8");
 
         return helpers.buildHttpMessage(headers, json.getBytes());
+    }
+
+    private static byte[] getAppropriateRequest(IExtensionHelpers helpers, byte[] request)
+    {
+        if ("GET".equals(helpers.analyzeRequest(request).getMethod()))
+        {
+            request = helpers.toggleRequestMethod(request);
+        }
+
+        return request;
     }
 
     private static Map<String, String> splitQuery(String body)
