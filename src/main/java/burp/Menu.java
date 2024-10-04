@@ -11,53 +11,59 @@ import java.util.List;
 import static burp.IBurpExtenderCallbacks.TOOL_INTRUDER;
 import static burp.IContextMenuInvocation.CONTEXT_MESSAGE_EDITOR_REQUEST;
 
-public class Menu implements IContextMenuFactory {
+public class Menu implements IContextMenuFactory
+{
     private final IBurpExtenderCallbacks callbacks;
     private final IExtensionHelpers helpers;
 
-    public Menu(IBurpExtenderCallbacks callbacks) {
+    public Menu(IBurpExtenderCallbacks callbacks)
+    {
         this.callbacks = callbacks;
         this.helpers = callbacks.getHelpers();
     }
 
-    public List<JMenuItem> createMenuItems(final IContextMenuInvocation invocation) {
+    public List<JMenuItem> createMenuItems(final IContextMenuInvocation invocation)
+    {
         List<JMenuItem> menus = new ArrayList<>();
 
-        if (invocation.getToolFlag() != TOOL_INTRUDER && invocation.getInvocationContext() != CONTEXT_MESSAGE_EDITOR_REQUEST){
+        if (invocation.getToolFlag() != TOOL_INTRUDER && invocation.getInvocationContext() != CONTEXT_MESSAGE_EDITOR_REQUEST)
+        {
             return menus;
         }
 
         JMenuItem sendXMLToRepeater = new JMenuItem("Convert to XML");
         JMenuItem sendJSONToRepeater = new JMenuItem("Convert to JSON");
-        sendXMLToRepeater.addMouseListener(new MouseListener() {
-
-            public void mouseClicked(MouseEvent arg0) {
-
+        sendXMLToRepeater.addMouseListener(new MouseListener()
+        {
+            public void mouseClicked(MouseEvent arg0)
+            {
             }
 
-
-            public void mouseEntered(MouseEvent arg0) {
+            public void mouseEntered(MouseEvent arg0)
+            {
             }
 
-
-            public void mouseExited(MouseEvent arg0) {
+            public void mouseExited(MouseEvent arg0)
+            {
             }
 
-
-            public void mousePressed(MouseEvent arg0) {
-
+            public void mousePressed(MouseEvent arg0)
+            {
             }
 
-
-            public void mouseReleased(MouseEvent arg0) {
+            public void mouseReleased(MouseEvent arg0)
+            {
                 IHttpRequestResponse iReqResp = invocation.getSelectedMessages()[0];
-                try {
+                try
+                {
                     byte[] request = Utilities.convertToXML(helpers, iReqResp);
-                    if (request != null) {
-
+                    if (request != null)
+                    {
                         iReqResp.setRequest(request);
                     }
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     StringWriter out = new StringWriter();
                     e.printStackTrace(new PrintWriter(out));
                     callbacks.printError(out.toString());
@@ -65,35 +71,37 @@ public class Menu implements IContextMenuFactory {
             }
         });
 
-        sendJSONToRepeater.addMouseListener(new MouseListener() {
-
-            public void mouseClicked(MouseEvent arg0) {
-
+        sendJSONToRepeater.addMouseListener(new MouseListener()
+        {
+            public void mouseClicked(MouseEvent arg0)
+            {
             }
 
-
-            public void mouseEntered(MouseEvent arg0) {
+            public void mouseEntered(MouseEvent arg0)
+            {
             }
 
-
-            public void mouseExited(MouseEvent arg0) {
+            public void mouseExited(MouseEvent arg0)
+            {
             }
 
-
-            public void mousePressed(MouseEvent arg0) {
-
+            public void mousePressed(MouseEvent arg0)
+            {
             }
 
-
-            public void mouseReleased(MouseEvent arg0) {
+            public void mouseReleased(MouseEvent arg0)
+            {
                 IHttpRequestResponse iReqResp = invocation.getSelectedMessages()[0];
-                try {
+                try
+                {
                     byte[] request = Utilities.convertToJSON(helpers, iReqResp);
-                    if (request != null) {
+                    if (request != null)
+                    {
 
                         iReqResp.setRequest(request);
                     }
-                } catch (Exception e) {
+                } catch (Exception e)
+                {
                     StringWriter out = new StringWriter();
                     e.printStackTrace(new PrintWriter(out));
                     callbacks.printError(out.toString());

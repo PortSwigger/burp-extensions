@@ -24,13 +24,15 @@ import java.util.Objects;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-public class Utilities {
+public class Utilities
+{
 
-    public static byte[] convertToXML(IExtensionHelpers helpers, IHttpRequestResponse requestResponse) throws Exception {
-
+    public static byte[] convertToXML(IExtensionHelpers helpers, IHttpRequestResponse requestResponse) throws Exception
+    {
         byte[] request = requestResponse.getRequest();
 
-        if (Objects.equals(helpers.analyzeRequest(request).getMethod(), "GET")){
+        if (Objects.equals(helpers.analyzeRequest(request).getMethod(), "GET"))
+        {
             request = helpers.toggleRequestMethod(request);
         }
 
@@ -43,276 +45,336 @@ public class Utilities {
         String body = new String(request, bodyOffset, request.length - bodyOffset, UTF_8);
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        Document doc = new Document() {
-            public String getNodeName() {
+        Document doc = new Document()
+        {
+            public String getNodeName()
+            {
                 return null;
             }
 
-            public String getNodeValue() throws DOMException {
+            public String getNodeValue() throws DOMException
+            {
                 return null;
             }
 
-            public void setNodeValue(String nodeValue) throws DOMException {
-
+            public void setNodeValue(String nodeValue) throws DOMException
+            {
             }
 
-            public short getNodeType() {
+            public short getNodeType()
+            {
                 return 0;
             }
 
-            public Node getParentNode() {
+            public Node getParentNode()
+            {
                 return null;
             }
 
-            public NodeList getChildNodes() {
+            public NodeList getChildNodes()
+            {
                 return null;
             }
 
-            public Node getFirstChild() {
+            public Node getFirstChild()
+            {
                 return null;
             }
 
-            public Node getLastChild() {
+            public Node getLastChild()
+            {
                 return null;
             }
 
-            public Node getPreviousSibling() {
+            public Node getPreviousSibling()
+            {
                 return null;
             }
 
-            public Node getNextSibling() {
+            public Node getNextSibling()
+            {
                 return null;
             }
 
-            public NamedNodeMap getAttributes() {
+            public NamedNodeMap getAttributes()
+            {
                 return null;
             }
 
-            public Document getOwnerDocument() {
+            public Document getOwnerDocument()
+            {
                 return null;
             }
 
-            public Node insertBefore(Node newChild, Node refChild) throws DOMException {
+            public Node insertBefore(Node newChild, Node refChild) throws DOMException
+            {
                 return null;
             }
 
-            public Node replaceChild(Node newChild, Node oldChild) throws DOMException {
+            public Node replaceChild(Node newChild, Node oldChild) throws DOMException
+            {
                 return null;
             }
 
-            public Node removeChild(Node oldChild) throws DOMException {
+            public Node removeChild(Node oldChild) throws DOMException
+            {
                 return null;
             }
 
-            public Node appendChild(Node newChild) throws DOMException {
+            public Node appendChild(Node newChild) throws DOMException
+            {
                 return null;
             }
 
-            public boolean hasChildNodes() {
+            public boolean hasChildNodes()
+            {
                 return false;
             }
 
-            public Node cloneNode(boolean deep) {
+            public Node cloneNode(boolean deep)
+            {
                 return null;
             }
 
-            public void normalize() {
-
+            public void normalize()
+            {
             }
 
-            public boolean isSupported(String feature, String version) {
+            public boolean isSupported(String feature, String version)
+            {
                 return false;
             }
 
-            public String getNamespaceURI() {
+            public String getNamespaceURI()
+            {
                 return null;
             }
 
-            public String getPrefix() {
+            public String getPrefix()
+            {
                 return null;
             }
 
-            public void setPrefix(String prefix) throws DOMException {
-
+            public void setPrefix(String prefix) throws DOMException
+            {
             }
 
-            public String getLocalName() {
+            public String getLocalName()
+            {
                 return null;
             }
 
-            public boolean hasAttributes() {
+            public boolean hasAttributes()
+            {
                 return false;
             }
 
-            public String getBaseURI() {
+            public String getBaseURI()
+            {
                 return null;
             }
 
-            public short compareDocumentPosition(Node other) throws DOMException {
+            public short compareDocumentPosition(Node other) throws DOMException
+            {
                 return 0;
             }
 
-            public String getTextContent() throws DOMException {
+            public String getTextContent() throws DOMException
+            {
                 return null;
             }
 
-            public void setTextContent(String textContent) throws DOMException {
-
+            public void setTextContent(String textContent) throws DOMException
+            {
             }
 
-            public boolean isSameNode(Node other) {
+            public boolean isSameNode(Node other)
+            {
                 return false;
             }
 
-            public String lookupPrefix(String namespaceURI) {
+            public String lookupPrefix(String namespaceURI)
+            {
                 return null;
             }
 
-            public boolean isDefaultNamespace(String namespaceURI) {
+            public boolean isDefaultNamespace(String namespaceURI)
+            {
                 return false;
             }
 
-            public String lookupNamespaceURI(String prefix) {
+            public String lookupNamespaceURI(String prefix)
+            {
                 return null;
             }
 
-            public boolean isEqualNode(Node arg) {
+            public boolean isEqualNode(Node arg)
+            {
                 return false;
             }
 
-            public Object getFeature(String feature, String version) {
+            public Object getFeature(String feature, String version)
+            {
                 return null;
             }
 
-            public Object setUserData(String key, Object data, UserDataHandler handler) {
+            public Object setUserData(String key, Object data, UserDataHandler handler)
+            {
                 return null;
             }
 
-            public Object getUserData(String key) {
+            public Object getUserData(String key)
+            {
                 return null;
             }
 
-            public DocumentType getDoctype() {
+            public DocumentType getDoctype()
+            {
                 return null;
             }
 
-            public DOMImplementation getImplementation() {
+            public DOMImplementation getImplementation()
+            {
                 return null;
             }
 
-            public Element getDocumentElement() {
+            public Element getDocumentElement()
+            {
                 return null;
             }
 
-            public Element createElement(String tagName) throws DOMException {
+            public Element createElement(String tagName) throws DOMException
+            {
                 return null;
             }
 
-            public DocumentFragment createDocumentFragment() {
+            public DocumentFragment createDocumentFragment()
+            {
                 return null;
             }
 
-            public Text createTextNode(String data) {
+            public Text createTextNode(String data)
+            {
                 return null;
             }
 
-            public Comment createComment(String data) {
+            public Comment createComment(String data)
+            {
                 return null;
             }
 
-            public CDATASection createCDATASection(String data) throws DOMException {
+            public CDATASection createCDATASection(String data) throws DOMException
+            {
                 return null;
             }
 
-            public ProcessingInstruction createProcessingInstruction(String target, String data) throws DOMException {
+            public ProcessingInstruction createProcessingInstruction(String target, String data) throws DOMException
+            {
                 return null;
             }
 
-            public Attr createAttribute(String name) throws DOMException {
+            public Attr createAttribute(String name) throws DOMException
+            {
                 return null;
             }
 
-            public EntityReference createEntityReference(String name) throws DOMException {
+            public EntityReference createEntityReference(String name) throws DOMException
+            {
                 return null;
             }
 
-            public NodeList getElementsByTagName(String tagName) {
+            public NodeList getElementsByTagName(String tagName)
+            {
                 return null;
             }
 
-            public Node importNode(Node importedNode, boolean deep) throws DOMException {
+            public Node importNode(Node importedNode, boolean deep) throws DOMException
+            {
                 return null;
             }
 
-            public Element createElementNS(String namespaceURI, String qualifiedName) throws DOMException {
+            public Element createElementNS(String namespaceURI, String qualifiedName) throws DOMException
+            {
                 return null;
             }
 
-            public Attr createAttributeNS(String namespaceURI, String qualifiedName) throws DOMException {
+            public Attr createAttributeNS(String namespaceURI, String qualifiedName) throws DOMException
+            {
                 return null;
             }
 
-            public NodeList getElementsByTagNameNS(String namespaceURI, String localName) {
+            public NodeList getElementsByTagNameNS(String namespaceURI, String localName)
+            {
                 return null;
             }
 
-            public Element getElementById(String elementId) {
+            public Element getElementById(String elementId)
+            {
                 return null;
             }
 
-            public String getInputEncoding() {
+            public String getInputEncoding()
+            {
                 return null;
             }
 
-            public String getXmlEncoding() {
+            public String getXmlEncoding()
+            {
                 return null;
             }
 
-            public boolean getXmlStandalone() {
+            public boolean getXmlStandalone()
+            {
                 return false;
             }
 
-            public void setXmlStandalone(boolean xmlStandalone) throws DOMException {
-
+            public void setXmlStandalone(boolean xmlStandalone) throws DOMException
+            {
             }
 
-            public String getXmlVersion() {
+            public String getXmlVersion()
+            {
                 return null;
             }
 
-            public void setXmlVersion(String xmlVersion) throws DOMException {
-
+            public void setXmlVersion(String xmlVersion) throws DOMException
+            {
             }
 
-            public boolean getStrictErrorChecking() {
+            public boolean getStrictErrorChecking()
+            {
                 return false;
             }
 
-            public void setStrictErrorChecking(boolean strictErrorChecking) {
-
+            public void setStrictErrorChecking(boolean strictErrorChecking)
+            {
             }
 
-            public String getDocumentURI() {
+            public String getDocumentURI()
+            {
                 return null;
             }
 
-            public void setDocumentURI(String documentURI) {
-
+            public void setDocumentURI(String documentURI)
+            {
             }
 
-            public Node adoptNode(Node source) throws DOMException {
+            public Node adoptNode(Node source) throws DOMException
+            {
                 return null;
             }
 
-            public DOMConfiguration getDomConfig() {
+            public DOMConfiguration getDomConfig()
+            {
                 return null;
             }
 
-            public void normalizeDocument() {
-
+            public void normalizeDocument()
+            {
             }
 
-            public Node renameNode(Node n, String namespaceURI, String qualifiedName) throws DOMException {
+            public Node renameNode(Node n, String namespaceURI, String qualifiedName) throws DOMException
+            {
                 return null;
             }
         };
@@ -321,16 +383,17 @@ public class Utilities {
         xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
         xml.append("<root>");
 
-        if (content_type == 0 || content_type == 1) {
-
-            Map<String,String> params = splitQuery(body);
+        if (content_type == 0 || content_type == 1)
+        {
+            Map<String, String> params = splitQuery(body);
             Gson gson = new Gson();
             body = gson.toJson(params);
         }
 
         boolean success = true;
 
-        try {
+        try
+        {
             Object json = new JSONTokener(body).nextValue();
 
             xml.append(XML.toString(json));
@@ -338,15 +401,18 @@ public class Utilities {
 
             DocumentBuilder builder = factory.newDocumentBuilder();
 
-            ByteArrayInputStream input =  new ByteArrayInputStream(
+            ByteArrayInputStream input = new ByteArrayInputStream(
                     xml.toString().getBytes(UTF_8));
             doc = builder.parse(input);
 
-        } catch (Exception e){
+        }
+        catch (Exception e)
+        {
             success = false;
         }
 
-        if (!success) {
+        if (!success)
+        {
             return null;
         }
 
@@ -357,11 +423,13 @@ public class Utilities {
         return helpers.buildHttpMessage(headers, prettyPrint(doc).getBytes());
     }
 
-    public static byte[] convertToJSON(IExtensionHelpers helpers, IHttpRequestResponse requestResponse) {
+    public static byte[] convertToJSON(IExtensionHelpers helpers, IHttpRequestResponse requestResponse)
+    {
 
         byte[] request = requestResponse.getRequest();
 
-        if (Objects.equals(helpers.analyzeRequest(request).getMethod(), "GET")){
+        if (Objects.equals(helpers.analyzeRequest(request).getMethod(), "GET"))
+        {
             request = helpers.toggleRequestMethod(request);
         }
 
@@ -377,23 +445,32 @@ public class Utilities {
 
         boolean success = true;
 
-        try {
-            if (content_type == 3) {
+        try
+        {
+            if (content_type == 3)
+            {
                 JSONObject xmlJSONObject = XML.toJSONObject(body);
                 json = xmlJSONObject.toString(2);
-            } else if (content_type == 0 || content_type == 1) {
-                Map<String,String> params = splitQuery(body);
+            }
+            else if (content_type == 0 || content_type == 1)
+            {
+                Map<String, String> params = splitQuery(body);
                 Gson gson = new Gson();
                 json = gson.toJson(params);
-            } else {
+            }
+            else
+            {
                 json = body;
             }
-        }catch (Exception e){
+        }
+        catch (Exception e)
+        {
             success = false;
 
         }
 
-        if (!success) {
+        if (!success)
+        {
             return request;
         }
 
@@ -404,29 +481,32 @@ public class Utilities {
         return helpers.buildHttpMessage(headers, json.getBytes());
     }
 
-    private static Map<String,String> splitQuery(String body)
+    private static Map<String, String> splitQuery(String body)
     {
         Map<String, String> query_pairs = new LinkedHashMap<>();
         String[] pairs = body.split("&");
 
-        for (String pair : pairs) {
+        for (String pair : pairs)
+        {
             final int idx = pair.indexOf("=");
             final String key = idx > 0 ? URLDecoder.decode(pair.substring(0, idx), UTF_8) : pair;
-            if (!query_pairs.containsKey(key)) {
+            if (!query_pairs.containsKey(key))
+            {
                 query_pairs.put(key, "");
             }
             final String value = idx > 0 && pair.length() > idx + 1 ? URLDecoder.decode(pair.substring(idx + 1), UTF_8) : "";
-            query_pairs.put(key,value.trim());
+            query_pairs.put(key, value.trim());
         }
         return query_pairs;
     }
 
-    public static String prettyPrint(Document xml) throws Exception {
+    private static String prettyPrint(Document xml) throws Exception
+    {
         Transformer tf = TransformerFactory.newInstance().newTransformer();
         tf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
         tf.setOutputProperty(OutputKeys.INDENT, "yes");
         Writer out = new StringWriter();
         tf.transform(new DOMSource(xml), new StreamResult(out));
-       return(out.toString());
+        return (out.toString());
     }
 }
