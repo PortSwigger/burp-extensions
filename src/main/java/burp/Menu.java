@@ -3,7 +3,7 @@ package burp;
 import javax.swing.*;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static burp.IBurpExtenderCallbacks.TOOL_INTRUDER;
@@ -22,11 +22,9 @@ public class Menu implements IContextMenuFactory
 
     public List<JMenuItem> createMenuItems(final IContextMenuInvocation invocation)
     {
-        List<JMenuItem> menus = new ArrayList<>();
-
         if (invocation.getToolFlag() != TOOL_INTRUDER && invocation.getInvocationContext() != CONTEXT_MESSAGE_EDITOR_REQUEST)
         {
-            return menus;
+            return Collections.emptyList();
         }
 
         JMenuItem sendXMLToRepeater = new JMenuItem("Convert to XML");
@@ -58,10 +56,10 @@ public class Menu implements IContextMenuFactory
                 byte[] request = Utilities.convertToJSON(helpers, iReqResp);
                 if (request != null)
                 {
-
                     iReqResp.setRequest(request);
                 }
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 StringWriter out = new StringWriter();
                 e.printStackTrace(new PrintWriter(out));
@@ -69,9 +67,6 @@ public class Menu implements IContextMenuFactory
             }
         });
 
-        menus.add(sendXMLToRepeater);
-        menus.add(sendJSONToRepeater);
-
-        return menus;
+        return List.of(sendXMLToRepeater, sendJSONToRepeater);
     }
 }
