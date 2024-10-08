@@ -32,11 +32,8 @@ public class Utilities
 
         IRequestInfo requestInfo = helpers.analyzeRequest(request);
 
-        int bodyOffset = requestInfo.getBodyOffset();
-
         byte content_type = requestInfo.getContentType();
-
-        String body = new String(request, bodyOffset, request.length - bodyOffset, UTF_8);
+        String body = extractBodyFromRequest(requestInfo, request);
 
         StringBuilder xml = new StringBuilder();
         xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>");
@@ -83,11 +80,8 @@ public class Utilities
 
         IRequestInfo requestInfo = helpers.analyzeRequest(request);
 
-        int bodyOffset = requestInfo.getBodyOffset();
-
         byte content_type = requestInfo.getContentType();
-
-        String body = new String(request, bodyOffset, request.length - bodyOffset);
+        String body = extractBodyFromRequest(requestInfo, request);
 
         String json;
 
@@ -129,6 +123,13 @@ public class Utilities
         }
 
         return request;
+    }
+
+    private static String extractBodyFromRequest(IRequestInfo requestInfo, byte[] request)
+    {
+        int bodyOffset = requestInfo.getBodyOffset();
+
+        return new String(request, bodyOffset, request.length - bodyOffset, UTF_8);
     }
 
     private static Map<String, String> splitQuery(String body)
