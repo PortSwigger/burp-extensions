@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -26,7 +27,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class Utilities
 {
 
-    public static byte[] convertToXML(IExtensionHelpers helpers, IHttpRequestResponse requestResponse) throws Exception
+    public static byte[] convertToXML(IExtensionHelpers helpers, IHttpRequestResponse requestResponse)
     {
         byte[] request = getAppropriateRequest(helpers, requestResponse.getRequest());
 
@@ -151,13 +152,20 @@ public class Utilities
         return query_pairs;
     }
 
-    private static String prettyPrint(Document xml) throws Exception
+    private static String prettyPrint(Document xml)
     {
-        Transformer tf = TransformerFactory.newInstance().newTransformer();
-        tf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-        tf.setOutputProperty(OutputKeys.INDENT, "yes");
-        Writer out = new StringWriter();
-        tf.transform(new DOMSource(xml), new StreamResult(out));
-        return (out.toString());
+        try {
+            Transformer tf = TransformerFactory.newInstance().newTransformer();
+            tf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            tf.setOutputProperty(OutputKeys.INDENT, "yes");
+            Writer out = new StringWriter();
+            tf.transform(new DOMSource(xml), new StreamResult(out));
+
+            return (out.toString());
+        }
+        catch (TransformerException e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -1,8 +1,6 @@
 package burp;
 
 import javax.swing.*;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,44 +26,33 @@ public class Menu implements IContextMenuFactory
         }
 
         JMenuItem sendXMLToRepeater = new JMenuItem("Convert to XML");
-        sendXMLToRepeater.addActionListener(l -> {
-            IHttpRequestResponse iReqResp = invocation.getSelectedMessages()[0];
-
-            try
-            {
-                byte[] request = Utilities.convertToXML(helpers, iReqResp);
-                if (request != null)
+        sendXMLToRepeater.addActionListener(
+                new ErrorHandlingActionListener(callbacks, e ->
                 {
-                    iReqResp.setRequest(request);
-                }
-            }
-            catch (Exception e)
-            {
-                StringWriter out = new StringWriter();
-                e.printStackTrace(new PrintWriter(out));
-                callbacks.printError(out.toString());
-            }
-        });
+                    IHttpRequestResponse iReqResp = invocation.getSelectedMessages()[0];
+
+                    byte[] request = Utilities.convertToXML(helpers, iReqResp);
+
+                    if (request != null)
+                    {
+                        iReqResp.setRequest(request);
+                    }
+                })
+        );
 
         JMenuItem sendJSONToRepeater = new JMenuItem("Convert to JSON");
-        sendJSONToRepeater.addActionListener(l -> {
-            IHttpRequestResponse iReqResp = invocation.getSelectedMessages()[0];
+        sendJSONToRepeater.addActionListener(
+                new ErrorHandlingActionListener(callbacks, e -> {
+                    IHttpRequestResponse iReqResp = invocation.getSelectedMessages()[0];
 
-            try
-            {
-                byte[] request = Utilities.convertToJSON(helpers, iReqResp);
-                if (request != null)
-                {
-                    iReqResp.setRequest(request);
-                }
-            }
-            catch (Exception e)
-            {
-                StringWriter out = new StringWriter();
-                e.printStackTrace(new PrintWriter(out));
-                callbacks.printError(out.toString());
-            }
-        });
+                    byte[] request = Utilities.convertToJSON(helpers, iReqResp);
+
+                    if (request != null)
+                    {
+                        iReqResp.setRequest(request);
+                    }
+                })
+        );
 
         return List.of(sendXMLToRepeater, sendJSONToRepeater);
     }
