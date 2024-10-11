@@ -27,31 +27,24 @@ public class Menu implements IContextMenuFactory
 
         JMenuItem sendXMLToRepeater = new JMenuItem("Convert to XML");
         sendXMLToRepeater.addActionListener(
-                new ErrorHandlingActionListener(callbacks, e ->
-                {
-                    IHttpRequestResponse iReqResp = invocation.getSelectedMessages()[0];
-
-                    byte[] request = Utilities.convertToXML(helpers, iReqResp);
-
-                    if (request != null)
-                    {
-                        iReqResp.setRequest(request);
-                    }
-                })
+                new ErrorHandlingActionListener(
+                        callbacks,
+                        e -> new RequestUpdatingActionListener(
+                                invocation,
+                                request -> Utilities.convertToXML(helpers, request)
+                        )
+                )
         );
 
         JMenuItem sendJSONToRepeater = new JMenuItem("Convert to JSON");
         sendJSONToRepeater.addActionListener(
-                new ErrorHandlingActionListener(callbacks, e -> {
-                    IHttpRequestResponse iReqResp = invocation.getSelectedMessages()[0];
-
-                    byte[] request = Utilities.convertToJSON(helpers, iReqResp);
-
-                    if (request != null)
-                    {
-                        iReqResp.setRequest(request);
-                    }
-                })
+                new ErrorHandlingActionListener(
+                        callbacks,
+                        e -> new RequestUpdatingActionListener(
+                                invocation,
+                                request -> Utilities.convertToJSON(helpers, request)
+                        )
+                )
         );
 
         return List.of(sendXMLToRepeater, sendJSONToRepeater);

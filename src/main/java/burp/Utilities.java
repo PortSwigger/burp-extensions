@@ -27,9 +27,9 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class Utilities
 {
 
-    public static byte[] convertToXML(IExtensionHelpers helpers, IHttpRequestResponse requestResponse)
+    public static byte[] convertToXML(IExtensionHelpers helpers, byte[] initialRequest)
     {
-        byte[] request = getAppropriateRequest(helpers, requestResponse.getRequest());
+        byte[] request = getAppropriateRequest(helpers, initialRequest);
 
         IRequestInfo requestInfo = helpers.analyzeRequest(request);
 
@@ -74,10 +74,10 @@ public class Utilities
         return helpers.buildHttpMessage(headers, prettyPrint(doc).getBytes());
     }
 
-    public static byte[] convertToJSON(IExtensionHelpers helpers, IHttpRequestResponse requestResponse)
+    public static byte[] convertToJSON(IExtensionHelpers helpers, byte[] initialRequest)
     {
 
-        byte[] request = getAppropriateRequest(helpers, requestResponse.getRequest());
+        byte[] request = getAppropriateRequest(helpers, initialRequest);
 
         IRequestInfo requestInfo = helpers.analyzeRequest(request);
 
