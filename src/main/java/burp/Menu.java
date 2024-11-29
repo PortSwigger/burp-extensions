@@ -29,7 +29,7 @@ public class Menu implements IContextMenuFactory
         sendXMLToRepeater.addActionListener(
                 new ErrorHandlingActionListener(
                         callbacks,
-                        e -> new RequestUpdatingActionListener(
+                        new RequestUpdatingActionListener(
                                 invocation,
                                 request -> Utilities.convertToXML(helpers, request)
                         )
@@ -40,7 +40,7 @@ public class Menu implements IContextMenuFactory
         sendJSONToRepeater.addActionListener(
                 new ErrorHandlingActionListener(
                         callbacks,
-                        e -> new RequestUpdatingActionListener(
+                        new RequestUpdatingActionListener(
                                 invocation,
                                 request -> Utilities.convertToJSON(helpers, request)
                         )
