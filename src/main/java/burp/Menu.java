@@ -1,5 +1,8 @@
 package burp;
 
+import burp.BodyProcessor.JsonBodyProcessor;
+import burp.BodyProcessor.XmlBodyProcessor;
+
 import javax.swing.*;
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +34,11 @@ public class Menu implements IContextMenuFactory
                         callbacks,
                         new RequestUpdatingActionListener(
                                 invocation,
-                                request -> Utilities.convertToXML(helpers, request)
+                                new RequestProcessor(
+                                        helpers,
+                                        new XmlBodyProcessor(),
+                                        "application/xml;charset=UTF-8"
+                                )
                         )
                 )
         );
@@ -42,7 +49,11 @@ public class Menu implements IContextMenuFactory
                         callbacks,
                         new RequestUpdatingActionListener(
                                 invocation,
-                                request -> Utilities.convertToJSON(helpers, request)
+                                new RequestProcessor(
+                                        helpers,
+                                        new JsonBodyProcessor(),
+                                        "application/json;charset=UTF-8"
+                                )
                         )
                 )
         );
