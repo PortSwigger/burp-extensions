@@ -18,7 +18,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Map;
 
-import static burp.Utilities.splitQuery;
+import static burp.Utilities.extractParameters;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public interface BodyProcessor
@@ -32,7 +32,7 @@ public interface BodyProcessor
         {
             return switch (contentType)
             {
-                case 0, 1 -> new Gson().toJson(splitQuery(body));
+                case 0, 1 -> new Gson().toJson(extractParameters(body));
 
                 case 3 -> XML.toJSONObject(body).toString(2);
 
@@ -48,7 +48,7 @@ public interface BodyProcessor
         {
             if (contentType == 0 || contentType == 1)
             {
-                Map<String, String> params = splitQuery(body);
+                Map<String, String> params = extractParameters(body);
                 Gson gson = new Gson();
                 body = gson.toJson(params);
             }
